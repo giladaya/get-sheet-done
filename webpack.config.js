@@ -15,7 +15,6 @@ if (env === 'build') {
 } else {
   outputFile = libraryName + '.js';
   plugins.push(new HtmlWebpackPlugin({
-    template: path.resolve('example', 'index.tpl.html'),
     filename: 'index.html',
     inject: false
   }))
@@ -44,7 +43,7 @@ module.exports = {
     library: [libraryName],
     libraryTarget: 'umd',
     umdNamedDefine: true,
-    publicPath: '/example',
+    publicPath: '/example/src',
     libraryExport: 'default'
   },
   externals: {
@@ -63,7 +62,7 @@ module.exports = {
     loaders: loaders
   },
   devServer: {
-    contentBase: path.join(__dirname, "example"),
+    contentBase: path.join(__dirname, "example", "src"),
     publicPath: "/js/"
   },
 };

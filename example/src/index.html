@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        #theForm {
+            border: 1px solid silver;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        #theForm > div {
+            margin-bottom: 10px;
+        }
+        .label {
+            display: inline-block;
+            width: 130px;
+        }
+        #key {
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Get Sheet Done demo</h1>
+    <p>
+        <a href="#">Repo</a>
+    </p>
+    
+    <form id="theForm">
+        <div>
+            <label title="Google sheet ID from URL">
+                <span class="label">Key:</span>
+                <input id="key" value="1TLGKjwTdseCeQpr6C4uMaBuPymw3D60WUn7tHCAnYyY"/>
+            </label>
+        </div>
+        <div>
+            <label title="Sheet number (first is 1)">
+                <span class="label">Sheet (1 based):</span>
+                <input id="sheetNum" type="number" value="1"/>
+            </label>
+        </div>
+        <div>
+            <label title="Whether first column should be used for row titles">
+                <span class="label">Row labels: </span>
+                <input id="rowsLabeled" type="checkbox"/>
+            </label>
+        </div>
+        <div>
+            <label title="Whether to include update dates for each row">
+                <span class="label">With dates:</span>
+                <input id="withDates" type="checkbox"/>
+            </label>
+        </div>
+        <div>
+            <button type="submit">Go</button>
+        </div>
+    </form>
+    <div>
+        <h2>Output</h2>
+        <pre id="output">
+            ...
+        </pre>
+    </div>
+
+    <script type='text/javascript' src='https://unpkg.com/fetch-jsonp@1.1.1'></script>
+    <script src="js/GetSheetDone.js"></script>
+    <script>
+        const KEY = '1TLGKjwTdseCeQpr6C4uMaBuPymw3D60WUn7tHCAnYyY';
+        const $key = document.getElementById('key'),
+            $sheetNum = document.getElementById('sheetNum'),
+            $rowsLabeled = document.getElementById('rowsLabeled'),
+            $withDates = document.getElementById('withDates'),
+            $form = document.getElementById('theForm'),
+            $output = document.getElementById('output');
+        let key,
+            sheetNum,
+            rowsLabeled,
+            withDates;
+
+        attachEvents();
+        readValues();
+        
+
+        // GetSheetDone(KEY, 1, false, true).then((data) => {
+        //     console.log('Data');
+        //     console.log(JSON.stringify(data));
+        // }).catch(err => {
+        //     console.log('Error');
+        //     console.log(err);
+        // })
+
+        function readValues() {
+            key = $key.value;
+            sheetNum =$sheetNum.value;
+            rowsLabeled = $rowsLabeled.checked;
+            withDates = $withDates.checked;
+        }
+
+        function attachEvents() {
+            $form.onsubmit = function(ev) {
+                ev.preventDefault();
+                readValues();
+                console.log(key, sheetNum, rowsLabeled, withDates)
+
+                GetSheetDone(key, sheetNum, rowsLabeled, withDates).then((data) => {
+                    console.log('Data');
+                    console.log(data);
+                    $output.innerHTML = JSON.stringify(data);
+                }).catch(err => {
+                    console.log('Error');
+                    console.log(err);
+                    $output.innerHTML = JSON.stringify(err);
+                })
+            }
+        }
+    </script>
+</body>
+</html>
