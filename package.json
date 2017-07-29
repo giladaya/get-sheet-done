@@ -1,0 +1,29 @@
+{
+  "name": "get-sheet-done",
+  "version": "0.1.0",
+  "description": "Pull data from google spreadsheets",
+  "main": "dist/GetSheetDone.js",
+  "module": "src/index.js",
+  "scripts": {
+    "start": "webpack-dev-server --port 3000",
+    "build": "webpack --env build",
+    "gh-pages": ""
+  },
+  "dependencies": {
+    "fetch-jsonp": "1.1.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.23.1",
+    "babel-loader": "^6.2.10",
+    "babel-preset-es2015": "^6.22.0",
+    "html-webpack-plugin": "2.22.0",
+    "webpack": "^3.4.1",
+    "webpack-dev-server": "^2.6.1"
+  },
+  "author": "Gilad Dayagi",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/giladaya/get-sheet-done.git"
+  }
+}
