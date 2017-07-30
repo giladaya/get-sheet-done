@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <style>
         body {
             font-family: sans-serif;
@@ -20,6 +21,7 @@
         }
         #key {
             width: 400px;
+            max-width: 100%;
         }
     </style>
 </head>
@@ -60,9 +62,9 @@
     </form>
     <div>
         <h2>Output</h2>
-        <pre id="output">
+        <div id="output">
             ...
-        </pre>
+        </div>
     </div>
 
     <script type='text/javascript' src='https://unpkg.com/fetch-jsonp@1.1.1'></script>
@@ -112,7 +114,7 @@
                 }).catch(err => {
                     console.log('Error');
                     console.log(err);
-                    $output.innerHTML = JSON.stringify(err);
+                    $output.innerHTML = err.message;
                 })
             }
         }
