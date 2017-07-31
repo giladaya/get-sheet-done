@@ -1,22 +1,16 @@
 import fetchJsonp from 'fetch-jsonp';
 
+function buildUrl(id, sheetNum, mode) {
+  return `https://spreadsheets.google.com/feeds/${mode}/${id}/${sheetNum}/public/values?alt=json-in-script`;  
+}
+
 export function raw(id, sheetNum) {
   const url = buildUrl(id, sheetNum, 'cells');
   return new Promise((resolve, reject) => {
     fetchJsonp(url).then(function(response) {
       return response.json()
     }).then(function(json) {
-      const data = []
-      json.feed.entry.forEach(cell => {
-        console.log(cell);
-        const row = parseInt(cell.gs$cell.row) - 1;
-        const col = parseInt(cell.gs$cell.col) - 1;
-        const content = cell.gs$cell.$t;
-        if (data[row] === undefined) {
-          data[row] = [];
-        }
-        data[row][col] = content;
-      })
+      const data = parseRawCells(json.feed.entry);
       const res = {
         title: json.feed.title.$t,
         updated: json.feed.updated.$t,
@@ -27,6 +21,21 @@ export function raw(id, sheetNum) {
       reject(ex)
     })
   })
+}
+
+function parseRawCells(entries) {
+  const data = []
+  entries.forEach(cell => {
+    console.log(cell);
+    const row = parseInt(cell.gs$cell.row) - 1;
+    const col = parseInt(cell.gs$cell.col) - 1;
+    const content = cell.gs$cell.$t;
+    if (data[row] === undefined) {
+      data[row] = [];
+    }
+    data[row][col] = content;
+  })
+  return data;
 }
 
 export function labeledCols(id, sheetNum) {
@@ -46,29 +55,6 @@ export function labeledCols(id, sheetNum) {
       reject(ex)
     })
   })
-}
-
-export function labeledColsRows(id, sheetNum) {
-  const url = buildUrl(id, sheetNum, 'list');
-  return new Promise((resolve, reject) => {
-    fetchJsonp(url).then(function(response) {
-      return response.json()
-    }).then(function(json) {
-      const data = parseLabeledRowsCols(json.feed.entry);
-      const res = {
-        title: json.feed.title.$t,
-        updated: json.feed.updated.$t,
-        data
-      }
-      resolve(res);
-    }).catch(function(ex) {
-      reject(ex)
-    })
-  })
-}
-
-function buildUrl(id, sheetNum, mode) {
-  return `https://spreadsheets.google.com/feeds/${mode}/${id}/${sheetNum}/public/values?alt=json-in-script`;  
 }
 
 /**
@@ -91,6 +77,25 @@ function parseEntry(entry) {
     }
   });
   return res;
+}
+
+export function labeledColsRows(id, sheetNum) {
+  const url = buildUrl(id, sheetNum, 'list');
+  return new Promise((resolve, reject) => {
+    fetchJsonp(url).then(function(response) {
+      return response.json()
+    }).then(function(json) {
+      const data = parseLabeledRowsCols(json.feed.entry);
+      const res = {
+        title: json.feed.title.$t,
+        updated: json.feed.updated.$t,
+        data
+      }
+      resolve(res);
+    }).catch(function(ex) {
+      reject(ex)
+    })
+  })
 }
 
 /**
