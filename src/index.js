@@ -1,6 +1,6 @@
 import fetchJsonp from 'fetch-jsonp';
 
-function buildUrl(id, sheetNum, mode) {
+export function buildUrl(id, sheetNum, mode) {
   return `https://spreadsheets.google.com/feeds/${mode}/${id}/${sheetNum}/public/values?alt=json-in-script`;  
 }
 
@@ -23,10 +23,9 @@ export function raw(id, sheetNum) {
   })
 }
 
-function parseRawCells(entries) {
+export function parseRawCells(entries) {
   const data = []
   entries.forEach(cell => {
-    console.log(cell);
     const row = parseInt(cell.gs$cell.row) - 1;
     const col = parseInt(cell.gs$cell.col) - 1;
     const content = cell.gs$cell.$t;
