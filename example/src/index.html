@@ -23,6 +23,13 @@
             width: 400px;
             max-width: 100%;
         }
+        #output {
+            overflow: auto;
+        }
+        .checkboxGroup {
+            display: inline-block;
+            vertical-align: top;
+        }
     </style>
 </head>
 <body>
@@ -46,14 +53,12 @@
         </div>
         <div>
             <label title="Whether first column should be used for row titles">
-                <span class="label">Row labels: </span>
-                <input id="rowsLabeled" type="checkbox"/>
-            </label>
-        </div>
-        <div>
-            <label title="Whether to include update dates for each row">
-                <span class="label">With dates:</span>
-                <input id="withDates" type="checkbox"/>
+                <span class="label">Data labels: </span>
+                <div>
+                    <input type="radio" name="type" value="cols" checked> Cols labels<br>
+                    <input type="radio" name="type" value="cols-rows"> Cols + Rows labels<br>
+                    <input type="radio" name="type" value="raw"> Raw arrays
+                </div>
             </label>
         </div>
         <div>
@@ -70,21 +75,15 @@
     <script type='text/javascript' src='https://unpkg.com/fetch-jsonp@1.1.1'></script>
     <script src="js/GetSheetDone.js"></script>
     <script>
-        const KEY = '1TLGKjwTdseCeQpr6C4uMaBuPymw3D60WUn7tHCAnYyY';
         const $key = document.getElementById('key'),
             $sheetNum = document.getElementById('sheetNum'),
-            $rowsLabeled = document.getElementById('rowsLabeled'),
-            $withDates = document.getElementById('withDates'),
             $form = document.getElementById('theForm'),
             $output = document.getElementById('output');
         let key,
             sheetNum,
-            rowsLabeled,
-            withDates;
+            sheetType;
 
         attachEvents();
-        readValues();
-        
 
         // GetSheetDone(KEY, 1, false, true).then((data) => {
         //     console.log('Data');
@@ -97,17 +96,30 @@
         function readValues() {
             key = $key.value;
             sheetNum =$sheetNum.value;
-            rowsLabeled = $rowsLabeled.checked;
-            withDates = $withDates.checked;
+            sheetType = document.querySelector('input[name="type"]:checked').value;
         }
 
         function attachEvents() {
             $form.onsubmit = function(ev) {
                 ev.preventDefault();
                 readValues();
-                console.log(key, sheetNum, rowsLabeled, withDates)
+                console.log(key, sheetNum, sheetType);
 
-                GetSheetDone(key, sheetNum, rowsLabeled, withDates).then((data) => {
+                let promise;
+                switch (sheetType) {
+                    case 'cols':
+                        promise = GetSheetDone.labeledCols(key, sheetNum);
+                        break;
+                    case 'cols-rows':
+                        promise = GetSheetDone.labeledColsRows(key, sheetNum);
+                        break;
+                    case 'raw':
+                    default:
+                        promise = GetSheetDone.raw(key, sheetNum);
+                        break;
+                }
+
+                promise.then((data) => {
                     console.log('Data');
                     console.log(data);
                     $output.innerHTML = JSON.stringify(data);
