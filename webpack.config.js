@@ -23,10 +23,9 @@ if (env === 'build') {
 let loaders = [
   {
     enforce: 'pre',
-    test: /\.tsx?$/,
-    loader: 'eslint',
-    // exclude: [/(node_modules|dist|coverage)/]
-    include: /(src)/
+    test: /\.jsx?$/,
+    loader: 'eslint-loader',
+    exclude: /(node_modules)/
   },
   {
     "test": /\.jsx?$/,
