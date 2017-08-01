@@ -14,10 +14,10 @@ if (env === 'build') {
   plugins.push(new UglifyJsPlugin({ minimize: true }));
 } else {
   outputFile = libraryName + '.js';
-  plugins.push(new HtmlWebpackPlugin({
-    filename: 'index.html',
-    inject: false
-  }))
+  // plugins.push(new HtmlWebpackPlugin({
+  //   filename: 'index.html',
+  //   inject: false
+  // }))
 }
 
 let loaders = [
@@ -49,7 +49,7 @@ module.exports = {
     library: [libraryName],
     libraryTarget: 'umd',
     umdNamedDefine: true,
-    publicPath: '/example/src',
+    //publicPath: '/example/src',
     libraryExport: 'default'
   },
   externals: {
