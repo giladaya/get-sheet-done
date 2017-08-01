@@ -175,3 +175,38 @@ describe('raw data', () => {
       expect(res).toEqual([["foo", "Bar bat", "baz"]]);
   })
 })
+
+describe('labeled cols', () => {
+    it('returns a promise', () => {
+        const fixture = GetSheetDone.labeledCols('', 0);
+        expect(typeof fixture.then).toBe('function');
+    });
+
+    it('parses data', () => {
+        const res = GetSheetDone.parseLabeledCols(mockJsonList.feed.entry);
+        expect(res).toEqual([{
+            "barbat": "123", 
+            "baz": "122", 
+            "foo": "2",
+            "summary": "247",
+        }]);
+    })
+})
+
+describe('labeled cols and rows', () => {
+    it('returns a promise', () => {
+        const fixture = GetSheetDone.labeledColsRows('', 0);
+        expect(typeof fixture.then).toBe('function');
+    });
+
+    it('parses data', () => {
+        const res = GetSheetDone.parseLabeledRowsCols(mockJsonList.feed.entry);
+        expect(res).toEqual({
+            "2": {
+                "barbat": "123", 
+                "baz": "122", 
+                "summary": "247",
+            }
+        });
+    })
+})

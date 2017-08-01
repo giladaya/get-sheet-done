@@ -4,13 +4,39 @@ export function buildUrl(id, sheetNum, mode) {
   return `https://spreadsheets.google.com/feeds/${mode}/${id}/${sheetNum}/public/values?alt=json-in-script`;  
 }
 
-export function raw(id, sheetNum) {
+export function raw(id, sheetNum = 1) {
+  //return fetchAndParse(id, sheetNum, 'cells', parseRawCells);
+  if (id.length === 0) {
+    return Promise.reject(new Error('empty id'));
+  }
   const url = buildUrl(id, sheetNum, 'cells');
   return new Promise((resolve, reject) => {
     fetchJsonp(url).then(function(response) {
       return response.json()
     }).then(function(json) {
       const data = parseRawCells(json.feed.entry);
+      const res = {
+        title: json.feed.title.$t,
+        updated: json.feed.updated.$t,
+        data
+      }
+      resolve(res);
+    }).catch(function(ex) {
+      reject(ex)
+    })
+  })
+}
+
+function fetchAndParse(id, sheetNum, type, parseEntries) {
+  if (id.length === 0) {
+    return Promise.reject(new Error('empty id'));
+  }
+  const url = buildUrl(id, sheetNum, type);
+  return new Promise((resolve, reject) => {
+    fetchJsonp(url).then(function(response) {
+      return response.json()
+    }).then(function(json) {
+      const data = parseEntries(json.feed.entry);
       const res = {
         title: json.feed.title.$t,
         updated: json.feed.updated.$t,
@@ -38,6 +64,9 @@ export function parseRawCells(entries) {
 }
 
 export function labeledCols(id, sheetNum) {
+  if (id.length === 0) {
+    return Promise.reject(new Error('empty id'));
+  }
   const url = buildUrl(id, sheetNum, 'list');
   return new Promise((resolve, reject) => {
     fetchJsonp(url).then(function(response) {
@@ -60,7 +89,7 @@ export function labeledCols(id, sheetNum) {
  * Parser for table where just the columns are labeled
  * @return array of objects where the labels are keys
  */
-function parseLabeledCols(entries) {
+export function parseLabeledCols(entries) {
   return entries.map(entry => parseEntry(entry));
 }
   
@@ -79,6 +108,9 @@ function parseEntry(entry) {
 }
 
 export function labeledColsRows(id, sheetNum) {
+  if (id.length === 0) {
+    return Promise.reject(new Error('empty id'));
+  }
   const url = buildUrl(id, sheetNum, 'list');
   return new Promise((resolve, reject) => {
     fetchJsonp(url).then(function(response) {
@@ -101,7 +133,7 @@ export function labeledColsRows(id, sheetNum) {
  * Parser for table where both rows and columns are labeled
  * @return object where keys are row labels and values are objects where keys are the column labels
  */
-function parseLabeledRowsCols(entries) {
+export function parseLabeledRowsCols(entries) {
   const res = {};
   entries.forEach(entry => {
     res[entry.title.$t] = parseLabeledRow(entry.content.$t)
