@@ -1,5 +1,6 @@
 import * as GetSheetDone from './index';
 
+/* eslint-disable max-len */
 const mockJsonList = {
   feed: {
     entry: [
@@ -156,6 +157,7 @@ const mockJsonCells = {
     ]
   }
 }
+/* eslint-enable max-len */
 
 describe('url builder', () => {
   it('returns correct url', () => {

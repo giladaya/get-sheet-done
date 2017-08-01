@@ -4,21 +4,6 @@ export function buildUrl(id, sheetNum, mode) {
   return `https://spreadsheets.google.com/feeds/${mode}/${id}/${sheetNum}/public/values?alt=json-in-script`;
 }
 
-// fetch as raw arrays
-export function raw(id, sheetNum = 1) {
-  return fetchAndParse(id, sheetNum, 'cells', parseRawCells);
-}
-
-// fetch as array of labeled columns
-export function labeledCols(id, sheetNum = 1) {
-  return fetchAndParse(id, sheetNum, 'list', parseLabeledCols);
-}
-
-// fetch as labeled map of labeled columns
-export function labeledColsRows(id, sheetNum = 1) {
-  return fetchAndParse(id, sheetNum, 'list', parseLabeledRowsCols);
-}
-
 // Generic fetch and parse function
 function fetchAndParse(id, sheetNum, type, parseEntries) {
   if (id.length === 0) {
@@ -45,8 +30,8 @@ function fetchAndParse(id, sheetNum, type, parseEntries) {
 export function parseRawCells(entries) {
   const data = []
   entries.forEach(cell => {
-    const row = parseInt(cell.gs$cell.row) - 1;
-    const col = parseInt(cell.gs$cell.col) - 1;
+    const row = parseInt(cell.gs$cell.row, 10) - 1;
+    const col = parseInt(cell.gs$cell.col, 10) - 1;
     const content = cell.gs$cell.$t;
     if (data[row] === undefined) {
       data[row] = [];
@@ -56,14 +41,6 @@ export function parseRawCells(entries) {
   return data;
 }
 
-/**
- * Parser for table where just the columns are labeled
- * @return array of objects where the labels are keys
- */
-export function parseLabeledCols(entries) {
-  return entries.map(entry => parseEntry(entry));
-}
-  
 /**
  * Use for table with labels only for columns
  */
@@ -79,18 +56,14 @@ function parseEntry(entry) {
 }
 
 /**
- * Parser for table where both rows and columns are labeled
- * @return object where keys are row labels and values are objects where keys are the column labels
+ * Parser for table where just the columns are labeled
+ * @return array of objects where the labels are keys
  */
-export function parseLabeledRowsCols(entries) {
-  const res = {};
-  entries.forEach(entry => {
-    res[entry.title.$t] = parseLabeledRow(entry.content.$t)
-  })
-  return res;
+export function parseLabeledCols(entries) {
+  return entries.map(entry => parseEntry(entry));
 }
 
-/** 
+/**
  * Use for table with labels for rows AND columns
  * Example input: "bar: 123, baz: 122, bab: 234"
  */
@@ -102,6 +75,33 @@ function parseLabeledRow(row) {
     return acc;
   }, {});
   return res;
+}
+
+/**
+ * Parser for table where both rows and columns are labeled
+ * @return object where keys are row labels and values are objects where keys are the column labels
+ */
+export function parseLabeledRowsCols(entries) {
+  const res = {};
+  entries.forEach(entry => {
+    res[entry.title.$t] = parseLabeledRow(entry.content.$t)
+  })
+  return res;
+}
+
+// fetch as raw arrays
+export function raw(id, sheetNum = 1) {
+  return fetchAndParse(id, sheetNum, 'cells', parseRawCells);
+}
+
+// fetch as array of labeled columns
+export function labeledCols(id, sheetNum = 1) {
+  return fetchAndParse(id, sheetNum, 'list', parseLabeledCols);
+}
+
+// fetch as labeled map of labeled columns
+export function labeledColsRows(id, sheetNum = 1) {
+  return fetchAndParse(id, sheetNum, 'list', parseLabeledRowsCols);
 }
 
 export default {
