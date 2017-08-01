@@ -4,29 +4,22 @@ export function buildUrl(id, sheetNum, mode) {
   return `https://spreadsheets.google.com/feeds/${mode}/${id}/${sheetNum}/public/values?alt=json-in-script`;  
 }
 
+// fetch as raw arrays
 export function raw(id, sheetNum = 1) {
-  //return fetchAndParse(id, sheetNum, 'cells', parseRawCells);
-  if (id.length === 0) {
-    return Promise.reject(new Error('empty id'));
-  }
-  const url = buildUrl(id, sheetNum, 'cells');
-  return new Promise((resolve, reject) => {
-    fetchJsonp(url).then(function(response) {
-      return response.json()
-    }).then(function(json) {
-      const data = parseRawCells(json.feed.entry);
-      const res = {
-        title: json.feed.title.$t,
-        updated: json.feed.updated.$t,
-        data
-      }
-      resolve(res);
-    }).catch(function(ex) {
-      reject(ex)
-    })
-  })
+  return fetchAndParse(id, sheetNum, 'cells', parseRawCells);
 }
 
+// fetch as array of labeled columns
+export function labeledCols(id, sheetNum = 1) {
+  return fetchAndParse(id, sheetNum, 'list', parseLabeledCols);
+}
+
+// fetch as labeled map of labeled columns
+export function labeledColsRows(id, sheetNum = 1) {
+  return fetchAndParse(id, sheetNum, 'list', parseLabeledRowsCols);
+}
+
+// Generic fetch and parse function
 function fetchAndParse(id, sheetNum, type, parseEntries) {
   if (id.length === 0) {
     return Promise.reject(new Error('empty id'));
@@ -63,28 +56,6 @@ export function parseRawCells(entries) {
   return data;
 }
 
-export function labeledCols(id, sheetNum) {
-  if (id.length === 0) {
-    return Promise.reject(new Error('empty id'));
-  }
-  const url = buildUrl(id, sheetNum, 'list');
-  return new Promise((resolve, reject) => {
-    fetchJsonp(url).then(function(response) {
-      return response.json()
-    }).then(function(json) {
-      const data = parseLabeledCols(json.feed.entry);
-      const res = {
-        title: json.feed.title.$t,
-        updated: json.feed.updated.$t,
-        data
-      }
-      resolve(res);
-    }).catch(function(ex) {
-      reject(ex)
-    })
-  })
-}
-
 /**
  * Parser for table where just the columns are labeled
  * @return array of objects where the labels are keys
@@ -105,28 +76,6 @@ function parseEntry(entry) {
     }
   });
   return res;
-}
-
-export function labeledColsRows(id, sheetNum) {
-  if (id.length === 0) {
-    return Promise.reject(new Error('empty id'));
-  }
-  const url = buildUrl(id, sheetNum, 'list');
-  return new Promise((resolve, reject) => {
-    fetchJsonp(url).then(function(response) {
-      return response.json()
-    }).then(function(json) {
-      const data = parseLabeledRowsCols(json.feed.entry);
-      const res = {
-        title: json.feed.title.$t,
-        updated: json.feed.updated.$t,
-        data
-      }
-      resolve(res);
-    }).catch(function(ex) {
-      reject(ex)
-    })
-  })
 }
 
 /**
