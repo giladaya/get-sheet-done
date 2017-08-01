@@ -1,7 +1,7 @@
 import fetchJsonp from 'fetch-jsonp';
 
 export function buildUrl(id, sheetNum, mode) {
-  return `https://spreadsheets.google.com/feeds/${mode}/${id}/${sheetNum}/public/values?alt=json-in-script`;  
+  return `https://spreadsheets.google.com/feeds/${mode}/${id}/${sheetNum}/public/values?alt=json-in-script`;
 }
 
 // fetch as raw arrays
@@ -26,9 +26,9 @@ function fetchAndParse(id, sheetNum, type, parseEntries) {
   }
   const url = buildUrl(id, sheetNum, type);
   return new Promise((resolve, reject) => {
-    fetchJsonp(url).then(function(response) {
+    fetchJsonp(url).then(function (response) {
       return response.json()
-    }).then(function(json) {
+    }).then(function (json) {
       const data = parseEntries(json.feed.entry);
       const res = {
         title: json.feed.title.$t,
@@ -36,7 +36,7 @@ function fetchAndParse(id, sheetNum, type, parseEntries) {
         data
       }
       resolve(res);
-    }).catch(function(ex) {
+    }).catch(function (ex) {
       reject(ex)
     })
   })
