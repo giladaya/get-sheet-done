@@ -47,7 +47,7 @@ const mockJsonList = {
       }
     ]
   }
-}
+};
 
 const mockJsonCells = {
   feed: {
@@ -156,7 +156,7 @@ const mockJsonCells = {
       }
     ]
   }
-}
+};
 /* eslint-enable max-len */
 
 describe('url builder', () => {
@@ -164,7 +164,7 @@ describe('url builder', () => {
     const url = GetSheetDone.buildUrl('1q2we3', 3, 'foo');
     expect(url).toBe('https://spreadsheets.google.com/feeds/foo/1q2we3/3/public/values?alt=json-in-script');
   });
-})
+});
 
 describe('raw data', () => {
   it('returns a promise', () => {
@@ -175,8 +175,8 @@ describe('raw data', () => {
   it('parses data', () => {
     const res = GetSheetDone.parseRawCells(mockJsonCells.feed.entry);
     expect(res).toEqual([['foo', 'Bar bat', 'baz']]);
-  })
-})
+  });
+});
 
 describe('labeled cols', () => {
   it('returns a promise', () => {
@@ -192,8 +192,8 @@ describe('labeled cols', () => {
       'foo': '2',
       'summary': '247',
     }]);
-  })
-})
+  });
+});
 
 describe('labeled cols and rows', () => {
   it('returns a promise', () => {
@@ -210,5 +210,5 @@ describe('labeled cols and rows', () => {
         'summary': '247',
       }
     });
-  })
-})
+  });
+});

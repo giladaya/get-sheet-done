@@ -12,23 +12,23 @@ function fetchAndParse(id, sheetNum, type, parseEntries) {
   const url = buildUrl(id, sheetNum, type);
   return new Promise((resolve, reject) => {
     fetchJsonp(url).then(function (response) {
-      return response.json()
+      return response.json();
     }).then(function (json) {
       const data = parseEntries(json.feed.entry);
       const res = {
         title: json.feed.title.$t,
         updated: json.feed.updated.$t,
         data
-      }
+      };
       resolve(res);
     }).catch(function (ex) {
-      reject(ex)
-    })
-  })
+      reject(ex);
+    });
+  });
 }
 
 export function parseRawCells(entries) {
-  const data = []
+  const data = [];
   entries.forEach(cell => {
     const row = parseInt(cell.gs$cell.row, 10) - 1;
     const col = parseInt(cell.gs$cell.col, 10) - 1;
@@ -37,7 +37,7 @@ export function parseRawCells(entries) {
       data[row] = [];
     }
     data[row][col] = content;
-  })
+  });
   return data;
 }
 
@@ -84,8 +84,8 @@ function parseLabeledRow(row) {
 export function parseLabeledRowsCols(entries) {
   const res = {};
   entries.forEach(entry => {
-    res[entry.title.$t] = parseLabeledRow(entry.content.$t)
-  })
+    res[entry.title.$t] = parseLabeledRow(entry.content.$t);
+  });
   return res;
 }
 
