@@ -22,6 +22,13 @@ if (env === 'build') {
 
 let loaders = [
   {
+    enforce: 'pre',
+    test: /\.tsx?$/,
+    loader: 'eslint',
+    // exclude: [/(node_modules|dist|coverage)/]
+    include: /(src)/
+  },
+  {
     "test": /\.jsx?$/,
     "exclude": /node_modules/,
     "loader": "babel-loader",
@@ -59,7 +66,7 @@ module.exports = {
   },
   plugins: plugins,
   module: {
-    loaders: loaders
+    rules: loaders
   },
   devServer: {
     contentBase: path.join(__dirname, "example", "src"),

@@ -1,8 +1,10 @@
 {
-  "ecmaFeatures": {
-    "globalReturn": true,
-    "jsx": true,
-    "modules": true
+  "parserOptions": {
+    "ecmaFeatures": {
+      "globalReturn": true,
+      "jsx": true,
+      "modules": true
+    }
   },
 
   "env": {
@@ -27,7 +29,7 @@
   "parser": "babel-eslint",
 
   "plugins": [
-    
+
   ],
 
   "rules": {
