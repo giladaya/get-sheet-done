@@ -69,6 +69,6 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, "example", "src"),
-    publicPath: "/js/"
+    publicPath: "/"
   },
 };
