@@ -8,7 +8,7 @@
     "start": "webpack-dev-server --port 3000",
     "build": "webpack && webpack --env build",
     "test": "jest",
-    "gh-pages": "mkdir example/dist && cp -r example/src/ example/dist && cp dist/GetSheetDone.js example/dist/ && gh-pages -d example/dist"
+    "gh-pages": "mkdir -p example/dist && cp -r example/src/ example/dist && cp dist/GetSheetDone.js example/dist/ && gh-pages -d example/dist"
   },
   "dependencies": {
     "fetch-jsonp": "1.1.1"
