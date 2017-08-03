@@ -1,5 +1,6 @@
 # GetSheetDone
-Helper library to pull data from google spreadsheets  
+Helper library to pull data from google spreadsheets   
+Live demo: https://giladaya.github.io/get-sheet-done/
 
 ## Use 
 - In the spreadsheet, `file -> publish to web`  
