@@ -19,7 +19,8 @@ GetSheetDone.raw(id, sheetNum = 1)
 Get the data as a raw array of arrays (rows).
 Suitable for spreadsheets that only contain values.
 
-For example, this sheet:
+For example, this sheet:  
+
 |   | A  | B  | C  | D  |
 |---|----|----|----|----|
 | 1 | 22 | 24 | 26 | 20 |
@@ -45,7 +46,8 @@ GetSheetDone.labeledCols(id, sheetNum = 1)
 ```
 Get the data as an array of objects, each representing a row. The keys are taken from the first row in the spreadsheet which is assumed to contain column headers.  
 
-For example, this sheet:
+For example, this sheet:  
+
 |   | A  | B  | C  | D  |
 |---|----|----|----|----|
 | 1 | **Q1** | **Q2** | **Q3** | **Q4** |
@@ -83,7 +85,8 @@ GetSheetDone.labeledColsRows(id, sheetNum = 1)
 ```
 Get the data as an object of objects, each representing a row. The first column in the spreadsheet is assumed to contain row headers, and the first row in the spreadsheet is assumed to contain column headers.
 
-So this sheet: 
+So this sheet:  
+
 |   | A      | B      | C      | D      | E      |
 |---|--------|--------|--------|--------|--------|
 | 1 |        | **Q1** | **Q2** | **Q3** | **Q4** |
