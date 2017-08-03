@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+    <title>get-sheet-done demo</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        #theForm {
+            border: 1px solid silver;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        #theForm > div {
+            margin-bottom: 10px;
+        }
+        .label {
+            display: inline-block;
+            width: 130px;
+        }
+        #key {
+            width: 400px;
+            max-width: 100%;
+        }
+        #output {
+            overflow: auto;
+        }
+        .checkboxGroup {
+            display: inline-block;
+            vertical-align: top;
+        }
+    </style>
+</head>
+<body>
+    <h1>Get Sheet Done demo</h1>
+    <p>
+        <a href="https://github.com/giladaya/get-sheet-done">Repo</a>
+    </p>
+
+    <form id="theForm">
+        <div>
+            <label title="Google sheet ID from URL">
+                <span class="label">Key:</span>
+                <input id="key" value="1TLGKjwTdseCeQpr6C4uMaBuPymw3D60WUn7tHCAnYyY"/>
+            </label>
+        </div>
+        <div>
+            <label title="Sheet number (first is 1)">
+                <span class="label">Sheet (1 based):</span>
+                <input id="sheetNum" type="number" value="1"/>
+            </label>
+        </div>
+        <div>
+            <label title="Whether first column should be used for row titles">
+                <span class="label">Data labels: </span>
+                <div>
+                    <input type="radio" name="type" value="cols" checked> Cols labels<br>
+                    <input type="radio" name="type" value="cols-rows"> Cols + Rows labels<br>
+                    <input type="radio" name="type" value="raw"> Raw arrays
+                </div>
+            </label>
+        </div>
+        <div>
+            <button type="submit">Go</button>
+        </div>
+    </form>
+    <div>
+        <h2>Output</h2>
+        <div id="output">
+            ...
+        </div>
+    </div>
+
+    <script type='text/javascript' src='https://unpkg.com/fetch-jsonp@1.1.1'></script>
+    <script src="GetSheetDone.js"></script>
+    <script>
+        const $key = document.getElementById('key'),
+            $sheetNum = document.getElementById('sheetNum'),
+            $form = document.getElementById('theForm'),
+            $output = document.getElementById('output');
+        let key,
+            sheetNum,
+            sheetType;
+
+        attachEvents();
+
+        // GetSheetDone(KEY, 1, false, true).then((data) => {
+        //     console.log('Data');
+        //     console.log(JSON.stringify(data));
+        // }).catch(err => {
+        //     console.log('Error');
+        //     console.log(err);
+        // })
+
+        function readValues() {
+            key = $key.value;
+            sheetNum =$sheetNum.value;
+            sheetType = document.querySelector('input[name="type"]:checked').value;
+        }
+
+        function attachEvents() {
+            $form.onsubmit = function(ev) {
+                ev.preventDefault();
+                readValues();
+                console.log(key, sheetNum, sheetType);
+
+                let promise;
+                switch (sheetType) {
+                    case 'cols':
+                        promise = GetSheetDone.labeledCols(key, sheetNum);
+                        break;
+                    case 'cols-rows':
+                        promise = GetSheetDone.labeledColsRows(key, sheetNum);
+                        break;
+                    case 'raw':
+                    default:
+                        promise = GetSheetDone.raw(key, sheetNum);
+                        break;
+                }
+
+                promise.then((data) => {
+                    console.log('Data');
+                    console.log(data);
+                    $output.innerHTML = JSON.stringify(data);
+                }).catch(err => {
+                    console.log('Error');
+                    console.log(err);
+                    $output.innerHTML = err.message;
+                })
+            }
+        }
+    </script>
+</body>
+</html>
