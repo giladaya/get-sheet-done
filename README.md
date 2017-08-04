@@ -2,10 +2,34 @@
 Helper library to pull data from google spreadsheets   
 Live demo: https://giladaya.github.io/get-sheet-done/
 
+## Caveats
+This is a simple library intended to provide a quick-and-dirty way to only **read** data from a Google spreadsheet.  
+The document you read from must be publicly published for this to work and the entire sheet data is fetched.  
+If you need something more sophisticated, checkout the [Google Sheets API](https://developers.google.com/sheets/api/)
+
 ## Usage 
+### General
 - In the spreadsheet, `file -> publish to web`  
 - Note the document key in the URL  
-- See `/example/src` for a simple demo
+
+### In browser
+See `/example/src` for a simple browser-based demo
+
+### With package loader
+Install from npm:  
+```
+npm install --save get-sheet-done
+```
+
+Use in code:  
+```
+import GetSheetDone from 'get-sheet-done';
+
+GetSheetDone.raw(DOC_KEY).then(sheet => {
+    console.log(sheet)
+})
+```
+
 
 ## Api
 There are three functions that return a promise and fetch the data from a published spreadsheet.  
@@ -21,11 +45,12 @@ Suitable for spreadsheets that only contain values.
 
 For example, this sheet:  
 
-|   | A  | B  | C  | D  |
-|---|----|----|----|----|
-| 1 | 22 | 24 | 26 | 20 |
-| 2 | 31 | 32 | 37 | 36 |
-| 3 | 11 | 14 | 19 | 12 |
+|     |     |     |     |     |
+|-----|-----|-----|-----|-----|
+|     | *A* | *B* | *C* | *D* |
+| *1* | 22  | 24  | 26  | 20  |
+| *2* | 31  | 32  | 37  | 36  |
+| *3* | 11  | 14  | 19  | 12  |
 
 Will result in this data:
 ```
@@ -48,12 +73,13 @@ Get the data as an array of objects, each representing a row. The keys are taken
 
 For example, this sheet:  
 
-|   | A  | B  | C  | D  |
-|---|----|----|----|----|
-| 1 | **Q1** | **Q2** | **Q3** | **Q4** |
-| 2 | 22 | 24 | 26 | 20 |
-| 3 | 31 | 32 | 37 | 36 |
-| 4 | 11 | 14 | 19 | 12 |
+|     |     |     |     |     |
+|-----|-----|-----|-----|-----|
+|     | *A* | *B* | *C* | *D* |
+| *1* | **Q1** | **Q2** | **Q3** | **Q4** |
+| *2* | 22  | 24  | 26  | 20  |
+| *3* | 31  | 32  | 37  | 36  |
+| *4* | 11  | 14  | 19  | 12  |
  
 Will result in this data: 
 ```
@@ -87,12 +113,13 @@ Get the data as an object of objects, each representing a row. The first column 
 
 So this sheet:  
 
-|   | A      | B      | C      | D      | E      |
-|---|--------|--------|--------|--------|--------|
-| 1 |        | **Q1** | **Q2** | **Q3** | **Q4** |
-| 2 | **UK** | 22     | 24     | 26     | 20     |
-| 3 | **US** | 31     | 32     | 37     | 36     |
-| 4 | **AU** | 11     | 14     | 19     | 12     |
+|     |        |        |        |        |        |
+|-----|--------|--------|--------|--------|--------|
+|     | *A*    | *B*    | *C*    | *D*    | *E*    |
+| *1* |        | **Q1** | **Q2** | **Q3** | **Q4** |
+| *2* | **UK** | 22     | 24     | 26     | 20     |
+| *3* | **US** | 31     | 32     | 37     | 36     |
+| *4* | **AU** | 11     | 14     | 19     | 12     |
 
 Will result in this data: 
 ```
