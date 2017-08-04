@@ -13,7 +13,8 @@ If you need something more sophisticated, checkout the [Google Sheets API](https
 - Note the document key in the URL  
 
 ### In browser
-See `/example/src` for a simple browser-based demo
+See `/example/src` for a simple browser-based demo.  
+Make sure to include the the dependecy `fetch-jsonp` in the page.
 
 ### With package loader
 Install from npm:  
