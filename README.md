@@ -1,14 +1,14 @@
 # GetSheetDone
-Helper library to pull data from google spreadsheets   
+Helper library to pull data from google spreadsheets.   
 Live demo: https://giladaya.github.io/get-sheet-done/
 
 ## Caveats
 This is a simple library intended to provide a quick-and-dirty way to only **read** data from a Google spreadsheet.  
 The document you read from must be publicly published for this to work and the entire sheet data is fetched.  
-If you need something more sophisticated, checkout the [Google Sheets API](https://developers.google.com/sheets/api/)
+If you need something more sophisticated, take a look at  the [Google Sheets API](https://developers.google.com/sheets/api/)
 
 ## Usage 
-### General
+### Preparation
 - In the spreadsheet, `file -> publish to web`  
 - Note the document key in the URL  
 
@@ -16,14 +16,14 @@ If you need something more sophisticated, checkout the [Google Sheets API](https
 See `/example/src` for a simple browser-based demo.  
 Make sure to include the the dependecy `fetch-jsonp` in the page.
 
-### With package loader
+### With a package loader
 Install from npm:  
 ```
 npm install --save get-sheet-done
 ```
 
 Use in code:  
-```
+```javascript
 import GetSheetDone from 'get-sheet-done';
 
 GetSheetDone.raw(DOC_KEY).then(sheet => {
@@ -38,7 +38,7 @@ Each function gets as arguments the document key (from the document url) and opt
 The functions differ in the way they parse and return the data:
 
 ### Raw
-```
+```javascript
 GetSheetDone.raw(id, sheetNum = 1)
 ```
 Get the data as a raw array of arrays (rows).
@@ -54,7 +54,7 @@ For example, this sheet:
 | *3* | 11  | 14  | 19  | 12  |
 
 Will result in this data:
-```
+```javascript
 {
   title: "Sheet1",
   updated: "2017-07-30T07:11:40.056Z",
@@ -83,7 +83,7 @@ For example, this sheet:
 | *4* | 11  | 14  | 19  | 12  |
  
 Will result in this data: 
-```
+```javascript
 {
   title: "Sheet1",
   updated: "2017-07-30T07:11:40.056Z",
@@ -123,7 +123,7 @@ So this sheet:
 | *4* | **AU** | 11     | 14     | 19     | 12     |
 
 Will result in this data: 
-```
+```javascript
 {
   title: "Sheet1",
   updated: "2017-07-30T07:11:40.056Z",
