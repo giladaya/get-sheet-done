@@ -1,6 +1,6 @@
 {
   "name": "get-sheet-done",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Pull data from google spreadsheets",
   "main": "dist/GetSheetDone.js",
   "module": "src/index.js",
