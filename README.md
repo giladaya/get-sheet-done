@@ -67,7 +67,7 @@ Will result in this data:
 ```
 
 ### Labeled Columns
-```
+```javascript
 GetSheetDone.labeledCols(id, sheetNum = 1)
 ```
 Get the data as an array of objects, each representing a row. The keys are taken from the first row in the spreadsheet which is assumed to contain column headers.  
@@ -107,7 +107,7 @@ Will result in this data:
 ``` 
 
 ### Labeled Columns and rows
-```
+```javascript
 GetSheetDone.labeledColsRows(id, sheetNum = 1)
 ```
 Get the data as an object of objects, each representing a row. The first column in the spreadsheet is assumed to contain row headers, and the first row in the spreadsheet is assumed to contain column headers.
