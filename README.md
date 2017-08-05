@@ -116,7 +116,8 @@ GetSheetDone.labeledColsRows(id, sheetNum = 1)
 ```
 Get the data as an object of objects, each representing a row. The first column in the spreadsheet is assumed to contain row headers, and the first row in the spreadsheet is assumed to contain column headers.  
 
-Note that all labels are converted to lower case and the only non-alphanumeric characters that are kept are periods and hyphens, so if the original label was `Lorem-ipsum dolor.sit:amet_blah`, the result labels would be: `lorem-ipsumdolor.sitametblah`.
+Note that all column labels are converted to lower case and the only non-alphanumeric characters that are kept are periods and hyphens, so if the original label was `Lorem-ipsum dolor.sit:amet_blah`, the result labels would be: `lorem-ipsumdolor.sitametblah`.  
+Row labels remain unchanged.
 
 #### Example
 This sheet:  
@@ -135,19 +136,19 @@ Will result in this data:
   title: "Sheet1",
   updated: "2017-07-30T07:11:40.056Z",
   data: {
-    uk: {
+    UK: {
       q1: "22",
       q2: "24",
       q3: "26",
       q4: "20"
     },
-    us: {
+    US: {
       q1: "31",
       q2: "32",
       q3: "37",
       q4: "36"
     },
-    au: {
+    AU: {
       q1: "11",
       q2: "14",
       q3: "19",
