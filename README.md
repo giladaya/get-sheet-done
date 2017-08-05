@@ -44,7 +44,8 @@ GetSheetDone.raw(id, sheetNum = 1)
 Get the data as a raw array of arrays (rows).
 Suitable for spreadsheets that only contain values.
 
-For example, this sheet:  
+#### Example
+This sheet:  
 
 |     |     |     |     |     |
 |-----|-----|-----|-----|-----|
@@ -71,9 +72,11 @@ Will result in this data:
 GetSheetDone.labeledCols(id, sheetNum = 1)
 ```
 Get the data as an array of objects, each representing a row. The keys are taken from the first row in the spreadsheet which is assumed to contain column headers.  
+
 Note that all labels are converted to lower case and the only non-alphanumeric characters that are kept are periods and hyphens, so if the original label was `Lorem-ipsum dolor.sit:amet_blah`, the result labels would be: `lorem-ipsumdolor.sitametblah`.
 
-For example, this sheet:  
+#### Example
+This sheet:  
 
 |     |     |     |     |     |
 |-----|-----|-----|-----|-----|
@@ -89,20 +92,20 @@ Will result in this data:
   title: "Sheet1",
   updated: "2017-07-30T07:11:40.056Z",
   data: [{
-    Q1: "22",
-    Q2: "24",
-    Q3: "26",
-    Q4: "20"
+    q1: "22",
+    q2: "24",
+    q3: "26",
+    q4: "20"
   },{
-    Q1: "31",
-    Q2: "32",
-    Q3: "37",
-    Q4: "36"
+    q1: "31",
+    q2: "32",
+    q3: "37",
+    q4: "36"
   },{
-    Q1: "11",
-    Q2: "14",
-    Q3: "19",
-    Q4: "12"
+    q1: "11",
+    q2: "14",
+    q3: "19",
+    q4: "12"
   }]
 }
 ``` 
@@ -112,9 +115,11 @@ Will result in this data:
 GetSheetDone.labeledColsRows(id, sheetNum = 1)
 ```
 Get the data as an object of objects, each representing a row. The first column in the spreadsheet is assumed to contain row headers, and the first row in the spreadsheet is assumed to contain column headers.  
+
 Note that all labels are converted to lower case and the only non-alphanumeric characters that are kept are periods and hyphens, so if the original label was `Lorem-ipsum dolor.sit:amet_blah`, the result labels would be: `lorem-ipsumdolor.sitametblah`.
 
-So this sheet:  
+#### Example
+This sheet:  
 
 |     |        |        |        |        |        |
 |-----|--------|--------|--------|--------|--------|
@@ -130,23 +135,23 @@ Will result in this data:
   title: "Sheet1",
   updated: "2017-07-30T07:11:40.056Z",
   data: {
-    UK: {
-      Q1: "22",
-      Q2: "24",
-      Q3: "26",
-      Q4: "20"
+    uk: {
+      q1: "22",
+      q2: "24",
+      q3: "26",
+      q4: "20"
     },
-    US: {
-      Q1: "31",
-      Q2: "32",
-      Q3: "37",
-      Q4: "36"
+    us: {
+      q1: "31",
+      q2: "32",
+      q3: "37",
+      q4: "36"
     },
-    AU: {
-      Q1: "11",
-      Q2: "14",
-      Q3: "19",
-      Q4: "12"
+    au: {
+      q1: "11",
+      q2: "14",
+      q3: "19",
+      q4: "12"
     }
   }
 }
