@@ -71,6 +71,7 @@ Will result in this data:
 GetSheetDone.labeledCols(id, sheetNum = 1)
 ```
 Get the data as an array of objects, each representing a row. The keys are taken from the first row in the spreadsheet which is assumed to contain column headers.  
+Note that all labels are converted to lower case and the only non-alphanumeric characters that are kept are periods and hyphens, so if the original label was `Lorem-ipsum dolor.sit:amet_blah`, the result labels would be: `lorem-ipsumdolor.sitametblah`.
 
 For example, this sheet:  
 
@@ -110,7 +111,8 @@ Will result in this data:
 ```javascript
 GetSheetDone.labeledColsRows(id, sheetNum = 1)
 ```
-Get the data as an object of objects, each representing a row. The first column in the spreadsheet is assumed to contain row headers, and the first row in the spreadsheet is assumed to contain column headers.
+Get the data as an object of objects, each representing a row. The first column in the spreadsheet is assumed to contain row headers, and the first row in the spreadsheet is assumed to contain column headers.  
+Note that all labels are converted to lower case and the only non-alphanumeric characters that are kept are periods and hyphens, so if the original label was `Lorem-ipsum dolor.sit:amet_blah`, the result labels would be: `lorem-ipsumdolor.sitametblah`.
 
 So this sheet:  
 
