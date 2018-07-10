@@ -10,7 +10,7 @@
     "gh-pages": "mkdir -p example/dist && cp -r example/src/ example/dist && cp dist/GetSheetDone.js example/dist/ && gh-pages -d example/dist"
   },
   "dependencies": {
-    "fetch-jsonp": "1.1.1"
+    "node-fetch": "1.7.3"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",

@@ -1,4 +1,4 @@
-import fetchJsonp from 'fetch-jsonp';
+import fetch from 'node-fetch';
 
 export function buildUrl(id, sheetNum, mode) {
   return `https://spreadsheets.google.com/feeds/${mode}/${id}/${sheetNum}/public/values?alt=json-in-script`;
@@ -11,7 +11,7 @@ function fetchAndParse(id, sheetNum, type, parseEntries) {
   }
   const url = buildUrl(id, sheetNum, type);
   return new Promise((resolve, reject) => {
-    fetchJsonp(url).then(function (response) {
+    fetch(url).then(function (response) {
       return response.json();
     }).then(function (json) {
       const data = parseEntries(json.feed.entry);
