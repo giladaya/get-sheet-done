@@ -1,4 +1,4 @@
-import fetch from 'node-fetch';
+import axios from 'axios';
 
 export function buildUrl(id, sheetNum, mode) {
   return `https://spreadsheets.google.com/feeds/${mode}/${id}/${sheetNum}/public/values?alt=json`;
@@ -11,8 +11,8 @@ function fetchAndParse(id, sheetNum, type, parseEntries) {
   }
   const url = buildUrl(id, sheetNum, type);
   return new Promise((resolve, reject) => {
-    fetch(url).then(function (response) {
-      return response.json();
+    axios.get(url).then(function (response) {
+      return response.data;
     }).then(function (json) {
       const data = parseEntries(json.feed.entry);
       const res = {
