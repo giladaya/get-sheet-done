@@ -11742,7 +11742,7 @@ var _nodeFetch2 = _interopRequireDefault(_nodeFetch);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function buildUrl(id, sheetNum, mode) {
-  return 'https://spreadsheets.google.com/feeds/' + mode + '/' + id + '/' + sheetNum + '/public/values?alt=json-in-script';
+  return 'https://spreadsheets.google.com/feeds/' + mode + '/' + id + '/' + sheetNum + '/public/values?alt=json';
 }
 
 // Generic fetch and parse function
