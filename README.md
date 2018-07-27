@@ -31,6 +31,21 @@ GetSheetDone.raw(DOC_KEY).then(sheet => {
 })
 ```
 
+### On the server
+Just `require('node-fetch')` in your project. Example:
+```javascript
+require('node-fetch');
+const GetSheetDone = require('./dist/GetSheetDone');
+
+GetSheetDone.labeledCols('1Dc3TPyR1rYoYurEdGGf8gZBO2eYtXaD8qmIRlDMdAMY', 1)
+  .then((data) => {
+    console.log('Data');
+    console.log(data);
+  }).catch(err => {
+    console.log('Error');
+    console.error(err);
+  });
+```
 
 ## Api
 There are three functions that return a promise and fetch the data from a published spreadsheet.  
