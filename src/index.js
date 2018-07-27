@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 export function buildUrl(id, sheetNum, mode) {
   return `https://spreadsheets.google.com/feeds/${mode}/${id}/${sheetNum}/public/values?alt=json`;
 }
