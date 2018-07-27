@@ -34,7 +34,7 @@ GetSheetDone.raw(DOC_KEY).then(sheet => {
 ### On the server
 Just `require('node-fetch')` in your project. Example:
 ```javascript
-require('node-fetch');
+global.fetch = require('node-fetch');
 const GetSheetDone = require('./dist/GetSheetDone');
 
 GetSheetDone.labeledCols('1Dc3TPyR1rYoYurEdGGf8gZBO2eYtXaD8qmIRlDMdAMY', 1)
