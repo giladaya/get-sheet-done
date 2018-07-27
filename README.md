@@ -14,7 +14,7 @@ If you need something more sophisticated, take a look at  the [Google Sheets API
 
 ### In browser
 See `/example/src` for a simple browser-based demo.  
-Make sure to include the the dependecy `fetch-jsonp` in the page.
+Note that this module relies on `Promise` and the `fetch` API to be available, so make sure to use polyfills if needed.
 
 ### With a package loader
 Install from npm:  
