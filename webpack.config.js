@@ -50,14 +50,6 @@ module.exports = {
     // publicPath: '/example/src',
     libraryExport: 'default'
   },
-  externals: {
-    'node-fetch': {
-      commonjs: 'node-fetch',
-      commonjs2: 'node-fetch',
-      amd: 'node-fetch',
-      root: 'nodeFetch'
-    }
-  },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx']
   },

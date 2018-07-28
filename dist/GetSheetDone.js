@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("node-fetch"));
+		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("GetSheetDone", ["node-fetch"], factory);
+		define("GetSheetDone", [], factory);
 	else if(typeof exports === 'object')
-		exports["GetSheetDone"] = factory(require("node-fetch"));
+		exports["GetSheetDone"] = factory();
 	else
-		root["GetSheetDone"] = factory(root["nodeFetch"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__) {
+		root["GetSheetDone"] = factory();
+})(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -90,13 +90,6 @@ exports.parseLabeledRowsCols = parseLabeledRowsCols;
 exports.raw = raw;
 exports.labeledCols = labeledCols;
 exports.labeledColsRows = labeledColsRows;
-
-var _nodeFetch = __webpack_require__(1);
-
-var _nodeFetch2 = _interopRequireDefault(_nodeFetch);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function buildUrl(id, sheetNum, mode) {
   return 'https://spreadsheets.google.com/feeds/' + mode + '/' + id + '/' + sheetNum + '/public/values?alt=json';
 }
@@ -108,7 +101,7 @@ function fetchAndParse(id, sheetNum, type, parseEntries) {
   }
   var url = buildUrl(id, sheetNum, type);
   return new Promise(function (resolve, reject) {
-    (0, _nodeFetch2.default)(url).then(function (response) {
+    fetch(url).then(function (response) {
       return response.json();
     }).then(function (json) {
       var data = parseEntries(json.feed.entry);
@@ -214,12 +207,6 @@ exports.default = {
   labeledCols: labeledCols,
   labeledColsRows: labeledColsRows
 };
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 /***/ })
 /******/ ])["default"];
