@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("fetch-jsonp"));
+		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("GetSheetDone", ["fetch-jsonp"], factory);
+		define("GetSheetDone", [], factory);
 	else if(typeof exports === 'object')
-		exports["GetSheetDone"] = factory(require("fetch-jsonp"));
+		exports["GetSheetDone"] = factory();
 	else
-		root["GetSheetDone"] = factory(root["fetchJsonp"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_1__) {
+		root["GetSheetDone"] = factory();
+})(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -90,15 +90,8 @@ exports.parseLabeledRowsCols = parseLabeledRowsCols;
 exports.raw = raw;
 exports.labeledCols = labeledCols;
 exports.labeledColsRows = labeledColsRows;
-
-var _fetchJsonp = __webpack_require__(1);
-
-var _fetchJsonp2 = _interopRequireDefault(_fetchJsonp);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function buildUrl(id, sheetNum, mode) {
-  return 'https://spreadsheets.google.com/feeds/' + mode + '/' + id + '/' + sheetNum + '/public/values?alt=json-in-script';
+  return 'https://spreadsheets.google.com/feeds/' + mode + '/' + id + '/' + sheetNum + '/public/values?alt=json';
 }
 
 // Generic fetch and parse function
@@ -108,7 +101,7 @@ function fetchAndParse(id, sheetNum, type, parseEntries) {
   }
   var url = buildUrl(id, sheetNum, type);
   return new Promise(function (resolve, reject) {
-    (0, _fetchJsonp2.default)(url).then(function (response) {
+    fetch(url).then(function (response) {
       return response.json();
     }).then(function (json) {
       var data = parseEntries(json.feed.entry);
@@ -214,12 +207,6 @@ exports.default = {
   labeledCols: labeledCols,
   labeledColsRows: labeledColsRows
 };
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 
 /***/ })
 /******/ ])["default"];

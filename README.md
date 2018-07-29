@@ -14,7 +14,7 @@ If you need something more sophisticated, take a look at  the [Google Sheets API
 
 ### In browser
 See `/example/src` for a simple browser-based demo.  
-Make sure to include the the dependecy `fetch-jsonp` in the page.
+Note that this module relies on `Promise` and the `fetch` API to be available, so make sure to use polyfills if needed.
 
 ### With a package loader
 Install from npm:  
@@ -31,6 +31,21 @@ GetSheetDone.raw(DOC_KEY).then(sheet => {
 })
 ```
 
+### On the server
+Just `require('node-fetch')` in your project. Example:
+```javascript
+global.fetch = require('node-fetch');
+const GetSheetDone = require('./dist/GetSheetDone');
+
+GetSheetDone.labeledCols('1Dc3TPyR1rYoYurEdGGf8gZBO2eYtXaD8qmIRlDMdAMY', 1)
+  .then((data) => {
+    console.log('Data');
+    console.log(data);
+  }).catch(err => {
+    console.log('Error');
+    console.error(err);
+  });
+```
 
 ## Api
 There are three functions that return a promise and fetch the data from a published spreadsheet.  

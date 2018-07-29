@@ -1,8 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
-const env  = require('yargs').argv.env; // use --env with webpack 2
+const env = require('yargs').argv.env; // use --env with webpack 2
 
 const libraryName = 'GetSheetDone';
 
@@ -28,14 +27,13 @@ let loaders = [
     exclude: /(node_modules)/
   },
   {
-    "test": /\.jsx?$/,
-    "exclude": /node_modules/,
-    "loader": "babel-loader",
-    "query": {
-      "presets": [
-        "babel-preset-es2015"
-      ],
-      "plugins": []
+    test: /\.jsx?$/,
+    exclude: /node_modules/,
+    loader: 'babel-loader',
+    query: {
+      presets: [
+        'babel-preset-es2015'
+      ]
     }
   }
 ];
@@ -49,16 +47,8 @@ module.exports = {
     library: [libraryName],
     libraryTarget: 'umd',
     umdNamedDefine: true,
-    //publicPath: '/example/src',
+    // publicPath: '/example/src',
     libraryExport: 'default'
-  },
-  externals: {
-    "fetch-jsonp": {
-      commonjs: "fetch-jsonp",
-      commonjs2: "fetch-jsonp",
-      amd: "fetch-jsonp",
-      root: "fetchJsonp"
-    }
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx']
@@ -68,7 +58,7 @@ module.exports = {
     rules: loaders
   },
   devServer: {
-    contentBase: path.join(__dirname, "example", "src"),
-    publicPath: "/"
+    contentBase: path.join(__dirname, 'example', 'src'),
+    publicPath: '/'
   },
 };
