@@ -177,5 +177,5 @@ Will result in this data:
 1. Clone this repo
 2. `npm install`
 3. `npm start`
-4. Go to `localhost:3000`
+4. Go to `localhost:3210`
 5. See `package.json` for other available scripts
