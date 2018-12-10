@@ -161,11 +161,19 @@ function parseLabeledCols(entries) {
  */
 function parseLabeledRow(row) {
   var cols = row.split(', ');
-  var res = cols.reduce(function (acc, col) {
+  var res = {};
+  var prevCol = null;
+  cols.forEach(function (col, idx) {
     var pair = col.split(': ');
-    acc[pair[0]] = pair[1];
-    return acc;
-  }, {});
+    if (pair.length === 2) {
+      res[pair[0]] = pair[1];
+      prevCol = pair[0];
+    } else if (pair.length === 1 && prevCol) {
+      res[prevCol] = res[prevCol] + ', ' + pair[0];
+    } else {
+      // noop
+    }
+  });
   return res;
 }
 
