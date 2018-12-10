@@ -1,6 +1,6 @@
 {
   "name": "get-sheet-done",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Pull data from google spreadsheets",
   "main": "dist/GetSheetDone.js",
   "scripts": {
@@ -9,8 +9,7 @@
     "test": "jest",
     "gh-pages": "mkdir -p example/dist && cp -r example/src/ example/dist && cp dist/GetSheetDone.js example/dist/ && gh-pages -d example/dist"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.23.1",
     "babel-eslint": "^7.2.3",
