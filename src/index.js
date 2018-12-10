@@ -68,11 +68,19 @@ export function parseLabeledCols(entries) {
  */
 function parseLabeledRow(row) {
   const cols = row.split(', ');
-  const res = cols.reduce((acc, col) => {
+  const res = {};
+  let prevCol = null;
+  cols.forEach((col, idx) => {
     const pair = col.split(': ');
-    acc[pair[0]] = pair[1];
-    return acc;
-  }, {});
+    if (pair.length === 2) {
+      res[pair[0]] = pair[1];
+      prevCol = pair[0];
+    } else if (pair.length === 1 && prevCol) {
+      res[prevCol] = res[prevCol] + ', ' + pair[0];
+    } else {
+      // noop
+    }
+  });
   return res;
 }
 
