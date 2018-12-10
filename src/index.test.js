@@ -162,7 +162,7 @@ const mockJsonCells = {
 describe('url builder', () => {
   it('returns correct url', () => {
     const url = GetSheetDone.buildUrl('1q2we3', 3, 'foo');
-    expect(url).toBe('https://spreadsheets.google.com/feeds/foo/1q2we3/3/public/values?alt=json-in-script');
+    expect(url).toBe('https://spreadsheets.google.com/feeds/foo/1q2we3/3/public/values?alt=json');
   });
 });
 
@@ -208,6 +208,18 @@ describe('labeled cols and rows', () => {
         'barbat': '123',
         'baz': '122',
         'summary': '247',
+      }
+    });
+  });
+  it('handles cells with commas', () => {
+    const entry = JSON.parse(JSON.stringify(mockJsonList.feed.entry));
+    entry[0].content.$t = 'column1: a, column2: b, c, column3: ddd';
+    const res = GetSheetDone.parseLabeledRowsCols(entry);
+    expect(res).toEqual({
+      '2': {
+        'column1': 'a',
+        'column2': 'b, c',
+        'column3': 'ddd',
       }
     });
   });
